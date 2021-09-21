@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  api:
+    image: node:14.3-slim
+    container_name: hash_api_container
+    ports:
+      - '3000:3000'
+    working_dir: '/home/node/app'
+    volumes:
+      - ./:/home/node/app
+    stdin_open: true
+    tty: true
+    networks:
+      - backend
+    command:
+      - sh
+      - -c
+      - |
+        npm install
+        npm start
+
+  discount_service:
+    image: hashorg/hash-mock-discount-service
+    container_name: 'hash_discount_service_container'
+    ports:
+      - '50051:50051'
+    networks:
+      - backend
+    hostname: discount_service.host
+
+networks:
+  backend:
+    driver: 'bridge'
