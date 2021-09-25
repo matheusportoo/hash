@@ -11,7 +11,7 @@ export class ProductsService {
     return this.products;
   }
 
-  findById(id: number): Product {
+  findById(id: number) {
     const product = this.products.find((product) => product.id === id);
 
     if (!product) {
