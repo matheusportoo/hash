@@ -3,21 +3,29 @@ import { Test } from '@nestjs/testing';
 import { CheckoutApplication } from './checkout.application';
 import { DiscountsService } from '../Discounts/discounts.service';
 import { ProductsService } from '../Products/products.service';
+import { ClientGRPC } from '../shared/client-grpc';
 
 describe('CheckoutApplication', () => {
   let checkoutApplication: CheckoutApplication;
   let discountsService: DiscountsService;
   let productsService: ProductsService;
+  let clientGRPC: ClientGRPC;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      providers: [DiscountsService, ProductsService, CheckoutApplication],
+      providers: [
+        DiscountsService,
+        ProductsService,
+        CheckoutApplication,
+        ClientGRPC,
+      ],
     }).compile();
 
     checkoutApplication =
       moduleRef.get<CheckoutApplication>(CheckoutApplication);
     discountsService = moduleRef.get<DiscountsService>(DiscountsService);
     productsService = moduleRef.get<ProductsService>(ProductsService);
+    clientGRPC = moduleRef.get<ClientGRPC>(ClientGRPC);
   });
 
   describe('Create cart', () => {

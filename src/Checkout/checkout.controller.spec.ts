@@ -4,17 +4,24 @@ import { CheckoutController } from './checkout.controller';
 import { CheckoutApplication } from './checkout.application';
 import { DiscountsService } from '../Discounts/discounts.service';
 import { ProductsService } from '../Products/products.service';
+import { ClientGRPC } from '../shared/client-grpc';
 
 describe('CheckoutController', () => {
   let checkoutController: CheckoutController;
   let checkoutApplication: CheckoutApplication;
   let discountsService: DiscountsService;
   let productsService: ProductsService;
+  let clientGRPC: ClientGRPC;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [CheckoutController],
-      providers: [CheckoutApplication, DiscountsService, ProductsService],
+      providers: [
+        CheckoutApplication,
+        DiscountsService,
+        ProductsService,
+        ClientGRPC,
+      ],
     }).compile();
 
     checkoutController = moduleRef.get<CheckoutController>(CheckoutController);
@@ -22,6 +29,7 @@ describe('CheckoutController', () => {
       moduleRef.get<CheckoutApplication>(CheckoutApplication);
     discountsService = moduleRef.get<DiscountsService>(DiscountsService);
     productsService = moduleRef.get<ProductsService>(ProductsService);
+    clientGRPC = moduleRef.get<ClientGRPC>(ClientGRPC);
   });
 
   describe('Create cart', () => {
