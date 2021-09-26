@@ -44,28 +44,28 @@ describe('BlackFridayService', () => {
       jest.spyOn(blackFridayService, 'getProductGift').mockReturnValue({
         id: 1,
         discount: 0,
-        isGift: true,
+        is_gift: true,
         quantity: 1,
-        totalAmount: 0,
-        unitAmount: 0,
+        total_amount: 0,
+        unit_amount: 0,
       });
 
       const products = blackFridayService.updateProducts([
         {
           id: 1,
           discount: 0,
-          isGift: true,
+          is_gift: true,
           quantity: 2,
-          totalAmount: 20,
-          unitAmount: 10,
+          total_amount: 20,
+          unit_amount: 10,
         },
         {
           id: 2,
           discount: 0,
-          isGift: false,
+          is_gift: false,
           quantity: 2,
-          totalAmount: 40,
-          unitAmount: 20,
+          total_amount: 40,
+          unit_amount: 20,
         },
       ]);
 
@@ -73,18 +73,18 @@ describe('BlackFridayService', () => {
         {
           id: 2,
           discount: 0,
-          isGift: false,
+          is_gift: false,
           quantity: 2,
-          totalAmount: 40,
-          unitAmount: 20,
+          total_amount: 40,
+          unit_amount: 20,
         },
         {
           id: 1,
           discount: 0,
-          isGift: true,
+          is_gift: true,
           quantity: 1,
-          totalAmount: 0,
-          unitAmount: 0,
+          total_amount: 0,
+          unit_amount: 0,
         },
       ]);
     });
@@ -101,10 +101,10 @@ describe('BlackFridayService', () => {
       expect(productGift).toEqual({
         discount: 0,
         id: 6,
-        isGift: true,
+        is_gift: true,
         quantity: 1,
-        totalAmount: 0,
-        unitAmount: 0,
+        total_amount: 0,
+        unit_amount: 0,
       });
     });
   });
