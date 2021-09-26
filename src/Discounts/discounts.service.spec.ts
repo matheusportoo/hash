@@ -31,7 +31,9 @@ describe('ProductService', () => {
 
   describe('fetchDiscount', () => {
     it('should call client.getDiscount', () => {
-      const getDiscountMock = jest.spyOn(client, 'getDiscount');
+      const getDiscountMock = jest
+        .spyOn(client, 'getDiscount')
+        .mockImplementation(() => true);
 
       productService.fetchDiscount(1);
 
