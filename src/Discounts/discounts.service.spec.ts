@@ -1,41 +1,48 @@
+import { Test } from '@nestjs/testing';
 import { DiscountsService } from './discounts.service';
-import client from '../shared/client-grpc';
+import { ClientGRPC } from '../shared/client-grpc';
 
 describe('ProductService', () => {
-  let productService: DiscountsService;
+  let discountsService: DiscountsService;
+  let clientGRPC: ClientGRPC;
   let fetchDiscountMock;
 
   beforeEach(async () => {
-    productService = new DiscountsService();
+    const moduleRef = await Test.createTestingModule({
+      providers: [DiscountsService, ClientGRPC],
+    }).compile();
+
+    clientGRPC = moduleRef.get<ClientGRPC>(ClientGRPC);
+    discountsService = moduleRef.get<DiscountsService>(DiscountsService);
   });
 
   describe('get', () => {
     it('should return an object with percentage property on fetchDiscount sucess', () => {
       fetchDiscountMock = jest
-        .spyOn(productService, 'fetchDiscount')
+        .spyOn(discountsService, 'fetchDiscount')
         .mockResolvedValue({ percentage: 0.0501 });
-      const data = productService.get(1);
+      const data = discountsService.get(1);
 
       expect(data).resolves.toEqual({ percentage: 0.05 });
     });
 
     it('should return an object with percentage property on fetchDiscount error', () => {
       fetchDiscountMock = jest
-        .spyOn(productService, 'fetchDiscount')
+        .spyOn(discountsService, 'fetchDiscount')
         .mockRejectedValue({});
-      const data = productService.get(1);
+      const data = discountsService.get(1);
 
       expect(data).resolves.toEqual({ percentage: 0 });
     });
   });
 
   describe('fetchDiscount', () => {
-    it('should call client.getDiscount', () => {
+    it('should call clientGRPC.init', () => {
       const getDiscountMock = jest
-        .spyOn(client, 'getDiscount')
-        .mockImplementation(() => true);
+        .spyOn(clientGRPC, 'init')
+        .mockImplementation(() => ({ getDiscount: null }));
 
-      productService.fetchDiscount(1);
+      discountsService.fetchDiscount(1);
 
       expect(getDiscountMock).toBeCalledTimes(1);
     });

@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
 import { Percentage } from './discount.interface';
-import client from '../shared/client-grpc';
+import { ClientGRPC } from '../shared/client-grpc';
 
 @Injectable()
 export class DiscountsService {
   private percentage: number;
+
+  constructor(private readonly clientGRPC: ClientGRPC) {}
 
   async get(productId: number) {
     this.percentage = 0;
@@ -22,9 +24,11 @@ export class DiscountsService {
 
   fetchDiscount(productId: number): Promise<Percentage> {
     return new Promise((resolve, reject) => {
-      client.getDiscount({ productID: productId }, (error, data) => {
-        error ? reject(error) : resolve(data);
-      });
+      this.clientGRPC
+        .init()
+        .getDiscount({ productID: productId }, (error, data) => {
+          error ? reject(error) : resolve(data);
+        });
     });
   }
 }
