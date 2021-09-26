@@ -11,7 +11,7 @@ export class BlackFridayService {
   isBlackFriday() {
     const date = new Date();
     const dateISO = date.toISOString();
-    console.log({ black: this.BLACK_FRIDAY_DATE, dateISO });
+
     return dateISO.includes(this.BLACK_FRIDAY_DATE);
   }
 
@@ -28,9 +28,9 @@ export class BlackFridayService {
       quantity: 1,
       discount: 0,
       id: productGift.id,
-      totalAmount: 0,
-      unitAmount: 0,
-      isGift: productGift.is_gift,
+      total_amount: 0,
+      unit_amount: 0,
+      is_gift: productGift.is_gift,
     });
   }
 
@@ -42,7 +42,9 @@ export class BlackFridayService {
   }
 
   updateProducts(products: ProductDtoResponse[]): ProductDtoResponse[] {
-    const productGiftPosition = products.findIndex((product) => product.isGift);
+    const productGiftPosition = products.findIndex(
+      (product) => product.is_gift,
+    );
     const hasProductGift = productGiftPosition > -1;
     const productGift = this.getProductGift();
 

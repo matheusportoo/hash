@@ -45,23 +45,23 @@ describe('CheckoutController', () => {
             {
               discount: 757.85,
               id: 1,
-              isGift: false,
+              is_gift: false,
               quantity: 2,
-              totalAmount: 30314,
-              unitAmount: 15157,
+              total_amount: 30314,
+              unit_amount: 15157,
             },
             {
               discount: 3017.8,
               id: 3,
-              isGift: false,
+              is_gift: false,
               quantity: 1,
-              totalAmount: 60356,
-              unitAmount: 60356,
+              total_amount: 60356,
+              unit_amount: 60356,
             },
           ],
-          totalAmount: 90670,
-          totalAmountWithDiscount: 86894.35,
-          totalDiscount: 3775.65,
+          total_amount: 90670,
+          total_amount_with_discount: 86894.35,
+          total_discount: 3775.65,
         });
 
       const response = await checkoutController.createCart({

@@ -32,9 +32,9 @@ export class CheckoutApplication {
     const { totalAmount, totalDiscount } = this.getTotals(products);
 
     return new CreateCartDtoResponse({
-      totalAmount,
-      totalAmountWithDiscount: totalAmount - totalDiscount,
-      totalDiscount,
+      total_amount: totalAmount,
+      total_amount_with_discount: totalAmount - totalDiscount,
+      total_discount: totalDiscount,
       products,
     });
   }
@@ -42,7 +42,7 @@ export class CheckoutApplication {
   private getTotals(products: ProductDtoResponse[]) {
     return products.reduce(
       (data, product) => {
-        data.totalAmount += product.totalAmount;
+        data.totalAmount += product.total_amount;
         data.totalDiscount += product.discount;
 
         return data;
@@ -68,9 +68,9 @@ export class CheckoutApplication {
       quantity: productCart.quantity,
       discount: product.amount * percentage,
       id: product.id,
-      totalAmount: product.amount * productCart.quantity,
-      unitAmount: product.amount,
-      isGift: product.is_gift,
+      total_amount: product.amount * productCart.quantity,
+      unit_amount: product.amount,
+      is_gift: product.is_gift,
     });
   }
 }
