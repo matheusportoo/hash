@@ -9,19 +9,26 @@ import {
   CreateCartDtoRequest,
   ProductCartDto,
 } from './dto/request/create-cart';
+import { BlackFridayService } from '../BlackFriday/black-friday.service';
 
 @Injectable()
 export class CheckoutApplication {
   constructor(
     private readonly productsService: ProductsService,
     private readonly discountsService: DiscountsService,
+    private readonly blackFridayService: BlackFridayService,
   ) {}
 
   async createCart(createCart: CreateCartDtoRequest) {
     const productsPromises = createCart.products.map((product) =>
       this.getProduct(product),
     );
-    const products = await Promise.all(productsPromises);
+    let products = await Promise.all(productsPromises);
+
+    if (this.blackFridayService.isBlackFriday()) {
+      products = this.blackFridayService.updateProducts(products);
+    }
+
     const { totalAmount, totalDiscount } = this.getTotals(products);
 
     return new CreateCartDtoResponse({
@@ -47,9 +54,15 @@ export class CheckoutApplication {
     );
   }
 
-  private async getProduct(productCart: ProductCartDto) {
+  private async getProduct(
+    productCart: ProductCartDto,
+    hasApplyDiscount = true,
+  ) {
     const product = this.productsService.findById(productCart.id);
-    const { percentage } = await this.discountsService.get(productCart.id);
+
+    const { percentage } = hasApplyDiscount
+      ? await this.discountsService.get(productCart.id)
+      : { percentage: 0 };
 
     return new ProductDtoResponse({
       quantity: productCart.quantity,
