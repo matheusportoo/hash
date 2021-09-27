@@ -16,17 +16,18 @@ Após ter subido os containers podemos já realizar chamadas http para o nosso e
 endpoint: http://localhost:3000/checkout
 method: POST
 body: {
-	"products": [
-		{
-			"id": 1,
-			"quantity": 2
-		},
-		{
-			"id": 2,
-			"quantity": 1
-		}
-	]
+  "products": [
+    {
+      "id": 1,
+      "quantity": 2
+    },
+    {
+      "id": 2,
+      "quantity": 1
+    }
+  ]
 }
+	
 ```
 
 Se preferir, pode executar diretamente no terminal via curl:
@@ -36,16 +37,16 @@ curl --request POST \
   --url http://localhost:3000/checkout \
   --header 'Content-Type: application/json' \
   --data '{
-	"products": [
-		{
-			"id": 1,
-			"quantity": 2
-		},
-		{
-			"id": 2,
-			"quantity": 1
-		}
-	]
+  "products": [
+    {
+      "id": 1,
+      "quantity": 2
+    },
+    {
+      "id": 2,
+      "quantity": 1
+    }
+  ]
 }'
 ```
 
@@ -58,10 +59,16 @@ Javascript utilizando o [nestjs](https://github.com/nestjs/nest) :D
 ## .Env
 
 - host do serviço de descontos:
-  DISCOUNT_SERVICE_HOST=discount_service.host:50051
+```
+DISCOUNT_SERVICE_HOST=discount_service.host:50051
+```
 
 - Data da black friday, formato (YYYY-mm-dd)
-  BLACK_FRIDAY_DATE=2021-09-29
+```
+BLACK_FRIDAY_DATE=2021-09-29
+```
 
 - Formatação dos valores monetários, opções: 'cents' ou 'normal'
-  VALUE_MONETARY_IN=cents
+```
+VALUE_MONETARY_IN=cents
+```
