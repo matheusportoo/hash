@@ -7,6 +7,7 @@ import { DiscountsService } from './Discounts/discounts.service';
 import { ProductsService } from './Products/products.service';
 import { BlackFridayService } from './BlackFriday/black-friday.service';
 import { ClientGRPC } from './shared/client-grpc';
+import { Currency } from './shared/currency';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,8 +19,9 @@ import { ClientGRPC } from './shared/client-grpc';
     ProductsService,
     DiscountsService,
     CheckoutApplication,
-    ClientGRPC,
     BlackFridayService,
+    ClientGRPC,
+    Currency,
   ],
 })
 export class AppModule {}

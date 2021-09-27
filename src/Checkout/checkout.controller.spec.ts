@@ -6,14 +6,16 @@ import { DiscountsService } from '../Discounts/discounts.service';
 import { ProductsService } from '../Products/products.service';
 import { BlackFridayService } from '../BlackFriday/black-friday.service';
 import { ClientGRPC } from '../shared/client-grpc';
+import { Currency } from '../shared/currency';
 
 describe('CheckoutController', () => {
   let checkoutController: CheckoutController;
   let checkoutApplication: CheckoutApplication;
   let discountsService: DiscountsService;
   let productsService: ProductsService;
-  let clientGRPC: ClientGRPC;
   let blackFridayService: BlackFridayService;
+  let clientGRPC: ClientGRPC;
+  let currency: Currency;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -22,8 +24,9 @@ describe('CheckoutController', () => {
         CheckoutApplication,
         DiscountsService,
         ProductsService,
-        ClientGRPC,
         BlackFridayService,
+        ClientGRPC,
+        Currency,
       ],
     }).compile();
 
@@ -32,8 +35,9 @@ describe('CheckoutController', () => {
       moduleRef.get<CheckoutApplication>(CheckoutApplication);
     discountsService = moduleRef.get<DiscountsService>(DiscountsService);
     productsService = moduleRef.get<ProductsService>(ProductsService);
-    clientGRPC = moduleRef.get<ClientGRPC>(ClientGRPC);
     blackFridayService = moduleRef.get<BlackFridayService>(BlackFridayService);
+    clientGRPC = moduleRef.get<ClientGRPC>(ClientGRPC);
+    currency = moduleRef.get<Currency>(Currency);
   });
 
   describe('Create cart', () => {
@@ -43,25 +47,25 @@ describe('CheckoutController', () => {
         .mockResolvedValue({
           products: [
             {
-              discount: 757.85,
+              discount: 75785,
               id: 1,
               is_gift: false,
               quantity: 2,
-              total_amount: 30314,
-              unit_amount: 15157,
+              total_amount: 3031400,
+              unit_amount: 1515700,
             },
             {
-              discount: 3017.8,
+              discount: 301780,
               id: 3,
               is_gift: false,
               quantity: 1,
-              total_amount: 60356,
-              unit_amount: 60356,
+              total_amount: 6035600,
+              unit_amount: 6035600,
             },
           ],
-          total_amount: 90670,
-          total_amount_with_discount: 86894.35,
-          total_discount: 3775.65,
+          total_amount: 9067000,
+          total_amount_with_discount: 8689435,
+          total_discount: 377565,
         });
 
       const response = await checkoutController.createCart({
