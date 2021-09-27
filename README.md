@@ -2,7 +2,8 @@
 
 Para rodar o projeto é necessário que você tenha o docker e docker compose instalado na máquina. Caso não tenha é só acessar os links abaixo para realizar a instalação:
 
-- [docker](https://docs.docker.com/get-docker/) -[docker-compose](https://docs.docker.com/compose/install/)
+- [docker](https://docs.docker.com/get-docker/)
+- [docker-compose](https://docs.docker.com/compose/install/)
 
 Agora vamos levantar nossos containers para executar o projeto, para isso basta executar o comando na raiz do projeto:
 
@@ -27,7 +28,7 @@ body: {
     }
   ]
 }
-	
+
 ```
 
 Se preferir, pode executar diretamente no terminal via curl:
@@ -59,16 +60,27 @@ Javascript utilizando o [nestjs](https://github.com/nestjs/nest) :D
 ## .Env
 
 - host do serviço de descontos:
+
 ```
 DISCOUNT_SERVICE_HOST=discount_service.host:50051
 ```
 
 - Data da black friday, formato (YYYY-mm-dd)
+
 ```
 BLACK_FRIDAY_DATE=2021-09-29
 ```
 
 - Formatação dos valores monetários, opções: 'cents' ou 'normal'
+
 ```
 VALUE_MONETARY_IN=cents
+```
+
+## Tests
+
+Para executar os testes, execute no terminal o comando abaixo:
+
+```
+npm run test:cov
 ```
