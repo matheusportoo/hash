@@ -54,3 +54,14 @@ http://localhost:3000/swagger-ui.html/#/api/CheckoutController_createCart
 
 Tecnologia:
 Javascript utilizando o [nestjs](https://github.com/nestjs/nest) :D
+
+## .Env
+
+- host do serviço de descontos:
+  DISCOUNT_SERVICE_HOST=discount_service.host:50051
+
+- Data da black friday, formato (YYYY-mm-dd)
+  BLACK_FRIDAY_DATE=2021-09-29
+
+- Formatação dos valores monetários, opções: 'cents' ou 'normal'
+  VALUE_MONETARY_IN=cents

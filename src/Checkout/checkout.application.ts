@@ -10,6 +10,7 @@ import {
   ProductCartDto,
 } from './dto/request/create-cart';
 import { BlackFridayService } from '../BlackFriday/black-friday.service';
+import { Currency } from '../shared/currency';
 
 @Injectable()
 export class CheckoutApplication {
@@ -17,6 +18,7 @@ export class CheckoutApplication {
     private readonly productsService: ProductsService,
     private readonly discountsService: DiscountsService,
     private readonly blackFridayService: BlackFridayService,
+    private readonly currency: Currency,
   ) {}
 
   async createCart(createCart: CreateCartDtoRequest) {
@@ -32,10 +34,17 @@ export class CheckoutApplication {
     const { totalAmount, totalDiscount } = this.getTotals(products);
 
     return new CreateCartDtoResponse({
-      total_amount: totalAmount,
-      total_amount_with_discount: totalAmount - totalDiscount,
-      total_discount: totalDiscount,
-      products,
+      total_amount: this.currency.getValue(totalAmount),
+      total_amount_with_discount: this.currency.getValue(
+        totalAmount - totalDiscount,
+      ),
+      total_discount: this.currency.getValue(totalDiscount),
+      products: products.map((product) => ({
+        ...product,
+        discount: this.currency.getValue(product.discount),
+        total_amount: this.currency.getValue(product.total_amount),
+        unit_amount: this.currency.getValue(product.unit_amount),
+      })),
     });
   }
 
